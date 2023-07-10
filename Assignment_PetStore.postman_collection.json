@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "5ec89b17-7634-497f-9c21-0da060ea23dd",
+		"name": "Assignment_PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24041542",
+		"_collection_link": "https://www.postman.com/spaceflight-astronomer-66415742/workspace/my-workspace/collection/24041542-5ec89b17-7634-497f-9c21-0da060ea23dd?action=share&creator=24041542&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "pet",
+			"item": [
+				{
+					"name": "Add a new pet to store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// var pet_Id = pm.collectionVariables.get(\"id\")\r",
+									"// console.log(pet_Id)\r",
+									"\r",
+									"// pm.collectionVariables.set(\"\")\r",
+									"\r",
+									"// var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"\r",
+									"var response = pm.response.json()\r",
+									"postman.setEnvironmentVariable(\"pet_Id\", response.id)\r",
+									"postman.setEnvironmentVariable(\"pet_Status\", response.status)\r",
+									"\r",
+									"console.log(response.id)\r",
+									"console.log(response.status)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 108,\r\n    \"category\": {\r\n        \"id\": 11,\r\n        \"name\": \"Pug\"\r\n    },\r\n    \"name\": \"Cheeka\",\r\n    \"photoUrls\": [\r\n        \"string\"\r\n    ],\r\n    \"tags\": [\r\n        {\r\n            \"id\": 0,\r\n            \"name\": \"string\"\r\n        }\r\n    ],\r\n    \"status\": \"available\"\r\n}"
+						},
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload pet image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 2000)",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "image/jpeg",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet/:pet_Id/uploadImage",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet",
+								":pet_Id",
+								"uploadImage"
+							],
+							"variable": [
+								{
+									"key": "pet_Id",
+									"value": "{{pet_Id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Pets by status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet/findByStatus?status=available",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "{{pet_Status}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "sold",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update name and status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "cheeku",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet/:pet_Id",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet",
+								":pet_Id"
+							],
+							"variable": [
+								{
+									"key": "pet_Id",
+									"value": "{{pet_Id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Pet by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "api_key",
+								"value": "rohan_petstore_collection"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet/:pet_Id",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet",
+								":pet_Id"
+							],
+							"variable": [
+								{
+									"key": "pet_Id",
+									"value": "{{pet_Id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an existing Pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+						},
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{pet_Store_Url}}/pet/:pet_Id",
+							"host": [
+								"{{pet_Store_Url}}"
+							],
+							"path": [
+								"pet",
+								":pet_Id"
+							],
+							"variable": [
+								{
+									"key": "pet_Id",
+									"value": "{{pet_Id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "store",
+			"item": []
+		},
+		{
+			"name": "user",
+			"item": []
+		}
+	],
+	"variable": [
+		{
+			"value": ""
+		},
+		{
+			"value": ""
+		}
+	]
+}
